@@ -100,9 +100,15 @@ class ContactTrainingControllerTest extends AbstractWebTestCase
             array('contact_training_form' => $formData,
                 'mode' => 'confirm')
         );
+
+
         $this->expected = 'Contact input';
         $this->actual = $crawler->filter('title')->text();
         $this->assertRegexp('/'.preg_quote($this->expected).'$/', $this->actual);
+
+        $message_error = 'This value is not valid.';
+        $this->actual = $crawler->filter('#top_box__address p.errormsg')->text();
+        $this->assertEquals($message_error, $this->actual);
     }
 
     public function testConfirm()
@@ -182,6 +188,10 @@ class ContactTrainingControllerTest extends AbstractWebTestCase
         $this->actual = $crawler_second->filter('title')->text();
         $this->expected = 'Contact input';
         $this->assertRegexp('/'.preg_quote($this->expected).'$/', $this->actual);
+
+        $message_error = 'It\'s not entered.';
+        $this->actual = $crawler_second->filter('#top_box__name p.errormsg')->eq(0)->text();
+        $this->assertEquals($message_error, $this->actual);
     }
 
     /**

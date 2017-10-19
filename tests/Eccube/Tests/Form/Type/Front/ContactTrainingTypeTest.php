@@ -109,17 +109,31 @@ class ContactTrainingTypeTest extends \Eccube\Tests\Form\Type\AbstractTypeTestCa
     }
 
 
-    public function testValid_Kana_Kana01()
+    public function testValid_Kana_Kana_A()
     {
-        $this->formData['kana']['kana01'] = 'お';
+        // Max: 25
+        /*アイウエカキクケサシスセタチツテトナニヌネハヒフヘホマミムメモヤイユエヨラリルレロワイウエン 46*/
+        $this->formData['kana']['kana01'] = 'アイウエカキクケサシスセタチツテトナニヌネハヒフヘ';
+        $this->formData['kana']['kana02'] = 'アイウエカキクケサシスセタチツテトナニヌネハヒフヘ';
 
         $this->form->submit($this->formData);
         $this->assertTrue($this->form->isValid());
     }
 
-    public function testInvalid_Kana_Kana01()
+    public function testValid_Kana_Kana_B()
     {
-        $this->formData['kana']['kana01'] = 'PHP';
+        // Max: 25
+        $this->formData['kana']['kana01'] = 'ホマミムメモヤイユエヨラリルレロワイウエン';
+        $this->formData['kana']['kana02'] = 'ホマミムメモヤイユエヨラリルレロワイウエン';
+
+        $this->form->submit($this->formData);
+        $this->assertTrue($this->form->isValid());
+    }
+
+    public function testInvalid_Kana_Kana()
+    {
+        $this->formData['kana']['kana01'] = 'DEV';
+        $this->formData['kana']['kana02'] = 'PHP';
 
         $this->form->submit($this->formData);
         $this->assertFalse($this->form->isValid());
@@ -183,12 +197,20 @@ class ContactTrainingTypeTest extends \Eccube\Tests\Form\Type\AbstractTypeTestCa
         $this->assertTrue($this->form->isValid());
     }
 
-    public function testInvalidEmail_format()
+    public function testValidEmail_format()
     {
         $this->formData['email'] = 'test@gmail.com';
 
         $this->form->submit($this->formData);
         $this->assertTrue($this->form->isValid());
+    }
+
+    public function testInvalidEmail_format()
+    {
+        $this->formData['email'] = 'testgmail.com';
+
+        $this->form->submit($this->formData);
+        $this->assertFalse($this->form->isValid());
     }
 
     public function testInvalid_Blank_Contents()
