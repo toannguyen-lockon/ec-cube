@@ -297,9 +297,11 @@ class EccubeServiceProvider implements ServiceProviderInterface
             $types[] = new \Eccube\Form\Type\NameType($app['config']);
             $types[] = new \Eccube\Form\Type\KanaType($app['config']);
             $types[] = new \Eccube\Form\Type\TelType($app['config']);
+            $types[] = new \Eccube\Form\Type\TelEnType($app['config']);
             $types[] = new \Eccube\Form\Type\FaxType(); // 削除予定
             $types[] = new \Eccube\Form\Type\ZipType($app['config']);
             $types[] = new \Eccube\Form\Type\AddressType($app['config']);
+            $types[] = new \Eccube\Form\Type\AddressEnType($app['config']);
             $types[] = new \Eccube\Form\Type\RepeatedEmailType();
             $types[] = new \Eccube\Form\Type\RepeatedPasswordType($app['config']);
             $types[] = new \Eccube\Form\Type\PriceType($app['config']);
@@ -312,6 +314,7 @@ class EccubeServiceProvider implements ServiceProviderInterface
             $types[] = new \Eccube\Form\Type\Master\SexType();
             $types[] = new \Eccube\Form\Type\Master\DispType();
             $types[] = new \Eccube\Form\Type\Master\PrefType();
+            $types[] = new \Eccube\Form\Type\Master\PrefEnType();
             $types[] = new \Eccube\Form\Type\Master\ProductTypeType();
             $types[] = new \Eccube\Form\Type\Master\ProductListMaxType();
             $types[] = new \Eccube\Form\Type\Master\ProductListOrderByType();
@@ -339,6 +342,7 @@ class EccubeServiceProvider implements ServiceProviderInterface
             // front
             $types[] = new \Eccube\Form\Type\Front\EntryType($app['config']);
             $types[] = new \Eccube\Form\Type\Front\ContactType($app['config']);
+            $types[] = new \Eccube\Form\Type\Front\ContactTrainingType($app['config']);
             $types[] = new \Eccube\Form\Type\Front\NonMemberType($app['config']);
             $types[] = new \Eccube\Form\Type\Front\ShoppingShippingType();
             $types[] = new \Eccube\Form\Type\Front\CustomerAddressType($app['config']);

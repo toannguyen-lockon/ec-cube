@@ -60,6 +60,10 @@ class FrontControllerProvider implements ControllerProviderInterface
         $c->match('/contact', '\Eccube\Controller\ContactController::index')->bind('contact');
         $c->match('/contact/complete', '\Eccube\Controller\ContactController::complete')->bind('contact_complete');
 
+        // contact training
+        $c->match('/contactTraining', '\Eccube\Controller\ContactTrainingController::index')->bind('contact_training');
+        $c->match('/contactTraining/complete', '\Eccube\Controller\ContactTrainingController::complete')->bind('contact_training_complete');
+
         // entry
         $c->match('/entry', '\Eccube\Controller\EntryController::index')->bind('entry');
         $c->match('/entry/complete', '\Eccube\Controller\EntryController::complete')->bind('entry_complete');

@@ -5,34 +5,35 @@ Bad credentials.: ログインできませんでした。<br>入力内容に誤�
 Invalid CSRF token.: もう一度ログイン処理をしてください。
 Your session has timed out, or you have disabled cookies.: もう一度ログイン処理をしてください。
 The uploaded file was too large. Please try to upload a smaller file.: ファイルサイズが大きすぎます。
-
-Name: お名前
+#Name: お名前
 Name01: 姓
 Name02: 名
-Kana: お名前(フリガナ)
+#Kana: お名前(フリガナ)
 Kana01: セイ
 Kana02: メイ
 Zip: 郵便番号
-Address: 住所
-Tel: 電話番号
+#Address: 住所
+#Tel: 電話番号
 Fax: FAX番号
-Email: メールアドレス
+#Email: メールアドレス
 Password: パスワード
 Job: 職業
 Sex: 性別
 Birth: 生年月日
 Company name : 会社名
-Contents: お問い合わせ内容
+#Contents: お問い合わせ内容
 Tag: タグ
 form.empty_value: 選択してください
 form.pref.empty_value: 都道府県を選択
+form.pref.empty_value_en: SELECT
 form.job.empty_value: 選択してください
 
 form.contact.address.help: 住所は2つに分けてご記入ください。マンション名は必ず記入してください。
 form.contact.contents.help: ご注文に関するお問い合わせには、必ず「ご注文番号」をご記入くださいますようお願いいたします。
 form.member.email.invalid: 同じメールアドレスを入力してください。
 form.member.password.invalid: 同じパスワードを入力してください。
-form.type.numeric.invalid: 数字で入力してください。
+#form.type.numeric.invalid: 数字で入力してください。
+form.type.numeric.invalid: Please enter with a number.
 form.type.float.invalid : 数字と小数点のみ入力できます。
 form.member.repeated.confirm: 確認のためもう一度入力してください
 form.type.graph.invalid: 半角英数字で入力してください。
@@ -44,7 +45,7 @@ form.type.customer.company.nothasspace: 会社名にスペース、タブ、改�
 form.type.admin.nottelstyle: 電話番号は半角数字かハイフンのみを入力してください。
 form.type.admin.notkanastyle: お名前(フリガナ)はカタカナで入力してください。
 
-form.type.select.notselect: 入力されていません。
+form.type.select.notselect: It is not entered.
 
 form.type.select.selectisfuturedate: 未来の日付は選択出来ません。
 
@@ -200,5 +201,10 @@ admin.change_password.save.error: パスワードを変更できませんでし�
 admin_title: 'EC-CUBE 管理機能' # 未使用
 normal_price_title: 通常価格    # 未使用
 sale_price_title: 販売価格
+
 form.address1.help: '市区町村名 (例：千代田区神田神保町)'
 form.address2.help: '番地・ビル名 (例：1-3-5)'
+
+
+form.address1_en.help: 'City name (example: Kanda Jimbocho, Chiyoda ku)'
+form.address2_en.help: 'Street · building name (eg 1-3-5)'

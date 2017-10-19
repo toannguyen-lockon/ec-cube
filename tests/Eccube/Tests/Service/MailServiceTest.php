@@ -162,7 +162,7 @@ class MailServiceTest extends AbstractServiceTestCase
         $Messages = $this->getMessages();
         $Message = $this->getMessage($Messages[0]->id);
 
-        $this->expected = '[' . $this->BaseInfo->getShopName() . '] お問い合わせを受け付けました。';
+        $this->expected = '[' . $this->BaseInfo->getShopName() . '] We received your inquiries.';
         $this->actual = $Message->subject;
         $this->verify();
 
@@ -222,7 +222,7 @@ class MailServiceTest extends AbstractServiceTestCase
         $Messages = $this->getMessages();
         $Message = $this->getMessage($Messages[0]->id);
 
-        $this->expected = '[' . $this->BaseInfo->getShopName() . '] お問い合わせを受け付けました。';
+        $this->expected = '[' . $this->BaseInfo->getShopName() . '] We received your inquiries.';
         $this->actual = $Message->subject;
         $this->verify();
 

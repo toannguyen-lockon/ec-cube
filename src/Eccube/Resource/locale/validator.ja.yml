@@ -1,2 +1,4 @@
-This value should not be blank.: 入力されていません。
+This value should not be blank.: It's not entered.
 "This value should be the user's current password.": 現在のパスワードが正しくありません。
+"This value is not valid.": This value is not valid.
+"This value is not a valid email address.": This value is not a valid email address.
