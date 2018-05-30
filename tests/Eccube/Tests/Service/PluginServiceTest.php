@@ -72,9 +72,9 @@ class PluginServiceTest extends AbstractServiceTestCase
             $this->deleteFile($dir);
         }
 
-        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
+        /*foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
             unlink($file);
-        }
+        }*/
 
         $this->deleteAllRows(['dtb_plugin_event_handler', 'dtb_plugin']);
 
@@ -290,15 +290,8 @@ class PluginServiceTest extends AbstractServiceTestCase
 <?php
 namespace Plugin\@@@@ ;
 
-
 class DummyEvent
 {
-    private $app;
-
-    public function __construct($app)
-    {
-        $this->app = $app;
-    }
     public function dummyHandler()
     {
         echo "dummyHandler\n";
@@ -617,7 +610,7 @@ EOD;
      */
     public function testPluginConfigCache()
     {
-        $this->app['debug'] = false;
+//        $this->app['debug'] = false;
         $pluginConfigCache = $this->container->getParameter('kernel.project_dir').'/app/cache/plugin/config_cache.php';
 
         // 事前にキャッシュを削除しておく
