@@ -20,6 +20,7 @@ use Eccube\Repository\PluginRepository;
 use Eccube\Service\Composer\ComposerApiService;
 use Eccube\Service\PluginService;
 use Eccube\Service\SchemaService;
+use Eccube\Util\CacheUtil;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
@@ -75,6 +76,7 @@ class PluginServiceTest extends AbstractServiceTestCase
         foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
             unlink($file);
         }
+        $this->container->get(CacheUtil::class)->clearCache('test');
 
         $this->deleteAllRows(['dtb_plugin_event_handler', 'dtb_plugin']);
 
