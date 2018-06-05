@@ -554,14 +554,15 @@ EOD;
         $this->service->enable($plugin);
         $this->assertRegexp('/Enabled/', ob_get_contents());
         ob_end_clean();
+        $this->clearProxyEntity();
         ob_start();
         $this->service->disable($plugin);
         $this->assertRegexp('/Disabled/', ob_get_contents());
         ob_end_clean();
+        $this->clearProxyEntity();
 
         // アンインストールできるか、アンインストーラが呼ばれるか
         ob_start();
-        $this->service->disable($plugin);
         $this->assertTrue($this->service->uninstall($plugin));
         $this->assertRegexp('/DisabledUninstalled/', ob_get_contents());
         ob_end_clean();
