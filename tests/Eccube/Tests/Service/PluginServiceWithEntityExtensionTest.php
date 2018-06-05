@@ -77,6 +77,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
         }
 
         $this->clearProxyEntity();
+        echo 'PluginServiceWithEntityExtensionTest';
 
         parent::tearDown();
     }
@@ -244,6 +245,8 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
         self::assertContainsTrait($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configEnabled['code']}\\Entity\\HogeTrait",
             '有効状態のプラグインは利用されるはず');
+
+        $this->clearProxyEntity();
     }
 
     private static function assertContainsTrait($file, $trait, $message = 'Traitが有効になっているはず')

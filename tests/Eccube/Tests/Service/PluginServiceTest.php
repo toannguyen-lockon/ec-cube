@@ -77,6 +77,7 @@ class PluginServiceTest extends AbstractServiceTestCase
 
         $this->deleteAllRows(['dtb_plugin_event_handler', 'dtb_plugin']);
 
+        echo 'PluginServiceTest';
         parent::tearDown();
     }
 
