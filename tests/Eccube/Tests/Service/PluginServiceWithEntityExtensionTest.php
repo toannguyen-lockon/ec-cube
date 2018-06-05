@@ -75,9 +75,8 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
             $this->deleteFile($dir);
         }
 
-        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
-            unlink($file);
-        }
+        $this->clearProxyEntity();
+
         parent::tearDown();
     }
 
@@ -317,5 +316,22 @@ EOT
         );
 
         return [$config, $tmpfile];
+    }
+
+    /**
+     * FIXME: Fatal error: Cannot declare class Eccube\Entity\BaseInfo, because the name is already in use in /opt/project/ec-cube/app/proxy/entity/BaseInfo.php on line 28
+     * @deprecated before release
+     */
+    private function clearProxyEntity()
+    {
+        foreach (glob($this->container->getParameter('kernel.project_dir') . '/app/proxy/entity/*.php') as $file) {
+            unlink($file);
+        }
+        $this->clearCache();
+    }
+
+    private function clearCache()
+    {
+        $this->container->get(CacheUtil::class)->clearCache('test');
     }
 }
