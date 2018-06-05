@@ -121,11 +121,11 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
-
         // Traitは有効
         self::assertContainsTrait(
             $this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configA['code']}\\Entity\\HogeTrait");
+        $this->clearProxyEntity();
     }
 
     /**
@@ -143,6 +143,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
+        $this->clearProxyEntity();
 
         // 無効化
         $this->service->disable($pluginA);
@@ -151,6 +152,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
         self::assertNotContainsTrait(
             $this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configA['code']}\\Entity\\HogeTrait");
+        $this->clearProxyEntity();
     }
 
     /**
@@ -168,9 +170,11 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
+        $this->clearProxyEntity();
 
         // 無効化
         $this->service->disable($pluginA);
+        $this->clearProxyEntity();
 
         // スキーマ更新されるはず
         $this->mockSchemaService->expects($this->once())->method('updateSchema');
@@ -199,6 +203,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
+        $this->clearProxyEntity();
 
         // スキーマ更新されるはず
         $this->mockSchemaService->expects($this->once())->method('updateSchema');
@@ -245,7 +250,6 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
         self::assertContainsTrait($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configEnabled['code']}\\Entity\\HogeTrait",
             '有効状態のプラグインは利用されるはず');
-
         $this->clearProxyEntity();
     }
 
