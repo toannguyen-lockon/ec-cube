@@ -44,7 +44,6 @@ class PluginServiceTest extends AbstractServiceTestCase
      */
     public function setUp()
     {
-
         parent::setUp();
 
         $this->service = $this->container->get(PluginService::class);
