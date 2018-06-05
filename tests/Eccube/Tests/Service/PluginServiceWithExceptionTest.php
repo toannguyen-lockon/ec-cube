@@ -43,7 +43,6 @@ class PluginServiceWithExceptionTest extends AbstractServiceTestCase
      */
     public function setUp()
     {
-        $this->markTestIncomplete('Test');
         parent::setUp();
 
         $this->pluginRepository = $this->container->get(PluginRepository::class);
