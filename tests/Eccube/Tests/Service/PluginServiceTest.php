@@ -73,10 +73,8 @@ class PluginServiceTest extends AbstractServiceTestCase
             $this->deleteFile($dir);
         }
 
-        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
-            unlink($file);
-        }
-        $this->container->get(CacheUtil::class)->clearCache('test');
+        $this->clearProxyEntity();
+//        $this->clearCache();
 
         $this->deleteAllRows(['dtb_plugin_event_handler', 'dtb_plugin']);
 
@@ -367,7 +365,10 @@ EOD;
 
         // enable/disableできるか
         $this->assertTrue($this->service->disable($plugin));
+        $this->clearProxyEntity();
         $this->assertTrue($this->service->enable($plugin));
+        $this->clearProxyEntity();
+
 
         // イベント定義を更新する
         $event = [];
@@ -391,6 +392,7 @@ EOD;
 
         // updateできるか
         $this->assertTrue($this->service->update($plugin, $tmpfile));
+        $this->clearProxyEntity();
         $this->assertEquals($plugin->getVersion(), $tmpname.'u');
 
         // イベントハンドラが新しいevent.ymlと整合しているか(追加、削除)
@@ -417,6 +419,7 @@ EOD;
 
         // アンインストールできるか
         $this->assertTrue($this->service->uninstall($plugin));
+        $this->clearProxyEntity();
         // ちゃんとファイルが消えているか
         $this->assertFalse((bool) $rep->findOneBy(['name' => $tmpname, 'enabled' => 1]));
         $this->assertFileNotExists(__DIR__."/../../../../app/Plugin/$tmpname/config.yml");
@@ -829,5 +832,22 @@ EOD;
         ];
 
         return $jsonPHP;
+    }
+
+    /**
+     * FIXME: Fatal error: Cannot declare class Eccube\Entity\BaseInfo, because the name is already in use in /opt/project/ec-cube/app/proxy/entity/BaseInfo.php on line 28
+     * @deprecated before release
+     */
+    private function clearProxyEntity()
+    {
+        foreach (glob($this->container->getParameter('kernel.project_dir') . '/app/proxy/entity/*.php') as $file) {
+            unlink($file);
+        }
+        $this->clearCache();
+    }
+
+    private function clearCache()
+    {
+        $this->container->get(CacheUtil::class)->clearCache('test');
     }
 }
