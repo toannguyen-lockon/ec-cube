@@ -20,6 +20,7 @@ use Eccube\Repository\PluginRepository;
 use Eccube\Service\Composer\ComposerApiService;
 use Eccube\Service\PluginService;
 use Eccube\Service\SchemaService;
+use Eccube\Util\CacheUtil;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
@@ -43,6 +44,7 @@ class PluginServiceTest extends AbstractServiceTestCase
      */
     public function setUp()
     {
+//        $this->markTestIncomplete('Test');
         parent::setUp();
 
         $this->service = $this->container->get(PluginService::class);
@@ -72,12 +74,11 @@ class PluginServiceTest extends AbstractServiceTestCase
             $this->deleteFile($dir);
         }
 
-        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
-            unlink($file);
-        }
+        $this->clearProxyEntity();
 
         $this->deleteAllRows(['dtb_plugin_event_handler', 'dtb_plugin']);
 
+        echo 'PluginServiceTest';
         parent::tearDown();
     }
 
@@ -290,15 +291,8 @@ class PluginServiceTest extends AbstractServiceTestCase
 <?php
 namespace Plugin\@@@@ ;
 
-
 class DummyEvent
 {
-    private $app;
-
-    public function __construct($app)
-    {
-        $this->app = $app;
-    }
     public function dummyHandler()
     {
         echo "dummyHandler\n";
@@ -372,7 +366,10 @@ EOD;
 
         // enable/disableできるか
         $this->assertTrue($this->service->disable($plugin));
+        $this->clearProxyEntity();
         $this->assertTrue($this->service->enable($plugin));
+        $this->clearProxyEntity();
+
 
         // イベント定義を更新する
         $event = [];
@@ -396,6 +393,7 @@ EOD;
 
         // updateできるか
         $this->assertTrue($this->service->update($plugin, $tmpfile));
+        $this->clearProxyEntity();
         $this->assertEquals($plugin->getVersion(), $tmpname.'u');
 
         // イベントハンドラが新しいevent.ymlと整合しているか(追加、削除)
@@ -422,6 +420,7 @@ EOD;
 
         // アンインストールできるか
         $this->assertTrue($this->service->uninstall($plugin));
+        $this->clearProxyEntity();
         // ちゃんとファイルが消えているか
         $this->assertFalse((bool) $rep->findOneBy(['name' => $tmpname, 'enabled' => 1]));
         $this->assertFileNotExists(__DIR__."/../../../../app/Plugin/$tmpname/config.yml");
@@ -556,14 +555,15 @@ EOD;
         $this->service->enable($plugin);
         $this->assertRegexp('/Enabled/', ob_get_contents());
         ob_end_clean();
+        $this->clearProxyEntity();
         ob_start();
         $this->service->disable($plugin);
         $this->assertRegexp('/Disabled/', ob_get_contents());
         ob_end_clean();
+        $this->clearProxyEntity();
 
         // アンインストールできるか、アンインストーラが呼ばれるか
         ob_start();
-        $this->service->disable($plugin);
         $this->assertTrue($this->service->uninstall($plugin));
         $this->assertRegexp('/DisabledUninstalled/', ob_get_contents());
         ob_end_clean();
@@ -617,7 +617,7 @@ EOD;
      */
     public function testPluginConfigCache()
     {
-        $this->app['debug'] = false;
+//        $this->app['debug'] = false;
         $pluginConfigCache = $this->container->getParameter('kernel.project_dir').'/app/cache/plugin/config_cache.php';
 
         // 事前にキャッシュを削除しておく
@@ -834,5 +834,22 @@ EOD;
         ];
 
         return $jsonPHP;
+    }
+
+    /**
+     * FIXME: Fatal error: Cannot declare class Eccube\Entity\BaseInfo, because the name is already in use in /opt/project/ec-cube/app/proxy/entity/BaseInfo.php on line 28
+     * @deprecated before release
+     */
+    private function clearProxyEntity()
+    {
+        foreach (glob($this->container->getParameter('kernel.project_dir') . '/app/proxy/entity/*.php') as $file) {
+            unlink($file);
+        }
+        $this->clearCache();
+    }
+
+    private function clearCache()
+    {
+        $this->container->get(CacheUtil::class)->clearCache('test');
     }
 }

@@ -65,6 +65,23 @@ class CacheUtil
 
         $console->run($input, $output);
 
+        $command = [
+            'command' => 'cache:warmup',
+        ];
+
+        if ($env !== null) {
+            $command['--env'] = $env;
+        }
+
+        $input = new ArrayInput($command);
+
+        $output = new BufferedOutput(
+            OutputInterface::VERBOSITY_DEBUG,
+            true
+        );
+
+        $console->run($input, $output);
+
         return $output->fetch();
     }
 

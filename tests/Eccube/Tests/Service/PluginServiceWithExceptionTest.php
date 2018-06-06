@@ -15,6 +15,7 @@ namespace Eccube\Tests\Service;
 
 use Eccube\Repository\PluginRepository;
 use Eccube\Service\PluginService;
+use Eccube\Util\CacheUtil;
 use Symfony\Component\Yaml\Yaml;
 
 /**

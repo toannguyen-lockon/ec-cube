@@ -343,6 +343,8 @@ class ProductClassControllerTest extends AbstractProductCommonTestCase
         $form['product_class_matrix[product_classes][0][tax_rate]'] = 0;
         $this->client->submit($form);
 
+        echo $this->client->getResponse()->getContent();
+
         // THEN
         // check submit
         $crawler = $this->client->followRedirect();

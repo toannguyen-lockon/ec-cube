@@ -16,6 +16,7 @@ namespace Eccube\Tests\Service;
 use Eccube\Repository\PluginRepository;
 use Eccube\Service\PluginService;
 use Eccube\Service\SchemaService;
+use Eccube\Util\CacheUtil;
 use PhpCsFixer\Tokenizer\CT;
 use PhpCsFixer\Tokenizer\Tokens;
 use Symfony\Component\Filesystem\Filesystem;
@@ -46,6 +47,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
      */
     public function setUp()
     {
+//        $this->markTestIncomplete('Test');
         parent::setUp();
 
         $this->mockSchemaService = $this->createMock(SchemaService::class);
@@ -75,9 +77,9 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
             $this->deleteFile($dir);
         }
 
-        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
-            unlink($file);
-        }
+        $this->clearProxyEntity();
+        echo 'PluginServiceWithEntityExtensionTest';
+
         parent::tearDown();
     }
 
@@ -120,11 +122,11 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
-
         // Traitは有効
         self::assertContainsTrait(
             $this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configA['code']}\\Entity\\HogeTrait");
+        $this->clearProxyEntity();
     }
 
     /**
@@ -142,6 +144,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
+        $this->clearProxyEntity();
 
         // 無効化
         $this->service->disable($pluginA);
@@ -150,6 +153,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
         self::assertNotContainsTrait(
             $this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configA['code']}\\Entity\\HogeTrait");
+        $this->clearProxyEntity();
     }
 
     /**
@@ -167,9 +171,11 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
+        $this->clearProxyEntity();
 
         // 無効化
         $this->service->disable($pluginA);
+        $this->clearProxyEntity();
 
         // スキーマ更新されるはず
         $this->mockSchemaService->expects($this->once())->method('updateSchema');
@@ -198,6 +204,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
 
         // 有効化
         $this->service->enable($pluginA);
+        $this->clearProxyEntity();
 
         // スキーマ更新されるはず
         $this->mockSchemaService->expects($this->once())->method('updateSchema');
@@ -244,6 +251,7 @@ class PluginServiceWithEntityExtensionTest extends AbstractServiceTestCase
         self::assertContainsTrait($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/Customer.php',
             "Plugin\\${configEnabled['code']}\\Entity\\HogeTrait",
             '有効状態のプラグインは利用されるはず');
+        $this->clearProxyEntity();
     }
 
     private static function assertContainsTrait($file, $trait, $message = 'Traitが有効になっているはず')
@@ -317,5 +325,22 @@ EOT
         );
 
         return [$config, $tmpfile];
+    }
+
+    /**
+     * FIXME: Fatal error: Cannot declare class Eccube\Entity\BaseInfo, because the name is already in use in /opt/project/ec-cube/app/proxy/entity/BaseInfo.php on line 28
+     * @deprecated before release
+     */
+    private function clearProxyEntity()
+    {
+        foreach (glob($this->container->getParameter('kernel.project_dir') . '/app/proxy/entity/*.php') as $file) {
+            unlink($file);
+        }
+        $this->clearCache();
+    }
+
+    private function clearCache()
+    {
+        $this->container->get(CacheUtil::class)->clearCache('test');
     }
 }
