@@ -69,7 +69,7 @@ class ExceptionListener implements EventSubscriberInterface
         try {
             $content = $this->twig->render('error.twig', [
                 'error_title' => $title,
-                'error_message' => $message,
+                'error_message' => $exception->__toString(),
             ]);
         } catch (\Exception $ignore) {
             $content = $title;
