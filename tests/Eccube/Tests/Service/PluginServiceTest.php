@@ -52,12 +52,15 @@ class PluginServiceTest extends AbstractServiceTestCase
 
         $this->service = $this->container->get(PluginService::class);
         $rc = new \ReflectionClass($this->service);
+
         $prop = $rc->getProperty('schemaService');
         $prop->setAccessible(true);
         $prop->setValue($this->service, $this->createMock(SchemaService::class));
+
         $prop = $rc->getProperty('composerService');
         $prop->setAccessible(true);
         $prop->setValue($this->service, $this->createMock(ComposerApiService::class));
+
         $prop = $rc->getProperty('entityProxyService');
         $prop->setAccessible(true);
         $prop->setValue($this->service, $this->createMock(EntityProxyService::class));
