@@ -18,6 +18,7 @@ use Eccube\Exception\PluginException;
 use Eccube\Plugin\ConfigManager;
 use Eccube\Repository\PluginRepository;
 use Eccube\Service\Composer\ComposerApiService;
+use Eccube\Service\EntityProxyService;
 use Eccube\Service\PluginService;
 use Eccube\Service\SchemaService;
 use Symfony\Component\Filesystem\Filesystem;
