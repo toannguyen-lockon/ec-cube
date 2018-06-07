@@ -24,6 +24,11 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class PluginServiceTest
+ * @package Eccube\Tests\Service
+ * @group cache-clear
+ */
 class PluginServiceTest extends AbstractServiceTestCase
 {
     /**
@@ -53,6 +58,10 @@ class PluginServiceTest extends AbstractServiceTestCase
         $prop = $rc->getProperty('composerService');
         $prop->setAccessible(true);
         $prop->setValue($this->service, $this->createMock(ComposerApiService::class));
+        $prop = $rc->getProperty('entityProxyService');
+        $prop->setAccessible(true);
+        $prop->setValue($this->service, $this->createMock(EntityProxyService::class));
+
         $this->pluginRepository = $this->container->get(PluginRepository::class);
     }
 

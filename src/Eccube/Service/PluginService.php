@@ -571,7 +571,7 @@ class PluginService
         $em = $this->entityManager;
         try {
             PluginConfigManager::removePluginConfigCache();
-            CacheUtil::clear($this->app, false);
+            $this->cacheUtil->clearCache();
             $pluginDir = $this->calcPluginDir($plugin->getCode());
             $em->getConnection()->beginTransaction();
             $plugin->setEnabled($enable ? true : false);
@@ -610,7 +610,7 @@ class PluginService
         $tmp = null;
         try {
             PluginConfigManager::removePluginConfigCache();
-            CacheUtil::clear($this->app, false);
+            $this->cacheUtil->clearCache();
             $tmp = $this->createTempDir();
 
             $this->unpackPluginArchive($path, $tmp); //一旦テンポラリに展開
