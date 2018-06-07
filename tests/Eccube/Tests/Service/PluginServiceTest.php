@@ -26,7 +26,7 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class PluginServiceTest
- * @package Eccube\Tests\Service
+ *
  * @group cache-clear
  */
 class PluginServiceTest extends AbstractServiceTestCase
