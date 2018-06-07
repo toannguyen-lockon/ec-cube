@@ -703,6 +703,7 @@ EOD;
      */
     public function testGetDependentByCodeEccubePlugin()
     {
+        $this->markTestIncomplete('Waiting dependency');
         $tmpname = 'dummy'.sha1(mt_rand());
         $config = [];
         $config['name'] = $tmpname.'_name';
@@ -739,6 +740,7 @@ EOD;
      */
     public function testGetDependentByCodeOtherPlugin()
     {
+        $this->markTestIncomplete('Waiting dependency');
         $tmpname = 'dummy'.sha1(mt_rand());
         $config = [];
         $config['name'] = $tmpname.'_name';
@@ -774,6 +776,7 @@ EOD;
      */
     public function testGetDependentByCodeAllPlugin()
     {
+        $this->markTestIncomplete('Waiting dependency');
         $tmpname = 'dummy'.sha1(mt_rand());
         $config = [];
         $config['name'] = $tmpname.'_name';
