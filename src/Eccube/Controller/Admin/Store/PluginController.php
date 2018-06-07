@@ -24,6 +24,7 @@ use Eccube\Form\Type\Admin\PluginManagementType;
 use Eccube\Repository\PluginEventHandlerRepository;
 use Eccube\Repository\PluginRepository;
 use Eccube\Service\PluginService;
+use Eccube\Util\CacheUtil;
 use Eccube\Util\StringUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -60,6 +61,9 @@ class PluginController extends AbstractController
      */
     protected $pluginRepository;
 
+    /** @var CacheUtil */
+    protected $cacheUtil;
+
     /**
      * PluginController constructor.
      *
@@ -67,12 +71,13 @@ class PluginController extends AbstractController
      * @param PluginService $pluginService
      * @param BaseInfo $baseInfo
      */
-    public function __construct(PluginRepository $pluginRepository, PluginService $pluginService, PluginEventHandlerRepository $eventHandlerRepository, BaseInfo $baseInfo)
+    public function __construct(PluginRepository $pluginRepository, PluginService $pluginService, PluginEventHandlerRepository $eventHandlerRepository, BaseInfo $baseInfo, CacheUtil $cacheUtil)
     {
         $this->pluginRepository = $pluginRepository;
         $this->pluginService = $pluginService;
         $this->pluginEventHandlerRepository = $eventHandlerRepository;
         $this->BaseInfo = $baseInfo;
+        $this->cacheUtil = $cacheUtil;
     }
 
     /**
@@ -263,6 +268,7 @@ class PluginController extends AbstractController
                 return $this->redirectToRoute('admin_store_plugin');
             }
             $this->pluginService->enable($Plugin);
+//            $this->cacheUtil->clearCache();
             $this->addSuccess('admin.plugin.enable.complete', 'admin');
         }
 
