@@ -480,15 +480,11 @@ class PluginService
     {
         $pluginDir = $this->calcPluginDir($plugin->getCode());
         ConfigManager::removePluginConfigCache();
-        $this->cacheUtil->clearCache();
+//        $this->cacheUtil->clearCache();
         $this->callPluginManagerMethod(Yaml::parse(file_get_contents($pluginDir.'/'.self::CONFIG_YML)), 'disable');
         $this->callPluginManagerMethod(Yaml::parse(file_get_contents($pluginDir.'/'.self::CONFIG_YML)), 'uninstall');
         $this->disable($plugin);
         $this->unregisterPlugin($plugin);
-
-        // スキーマを更新する
-        //FIXME: Update schema before no affect
-        $this->schemaService->updateSchema([], $this->projectRoot.'/app/proxy/entity');
 
         // プラグインのネームスペースに含まれるEntityのテーブルを削除する
         $namespace = 'Plugin\\'.$plugin->getCode().'\\Entity';
@@ -498,6 +494,9 @@ class PluginService
             $this->deleteFile($pluginDir);
             $this->removeAssets($plugin->getCode());
         }
+
+        // スキーマを更新する
+//        $this->schemaService->updateSchema([], $this->projectRoot.'/app/proxy/entity');
 
         ConfigManager::writePluginConfigCache();
 
@@ -571,7 +570,7 @@ class PluginService
         $em = $this->entityManager;
         try {
             PluginConfigManager::removePluginConfigCache();
-            $this->cacheUtil->clearCache();
+//            $this->cacheUtil->clearCache();
             $pluginDir = $this->calcPluginDir($plugin->getCode());
             $em->getConnection()->beginTransaction();
             $plugin->setEnabled($enable ? true : false);
@@ -589,7 +588,6 @@ class PluginService
             $em->getConnection()->rollback();
             throw $e;
         }
-        $this->cacheUtil->clearCache();
 
         return true;
     }
