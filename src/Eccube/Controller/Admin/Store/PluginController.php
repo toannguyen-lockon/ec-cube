@@ -61,7 +61,7 @@ class PluginController extends AbstractController
      */
     protected $pluginRepository;
 
-    /** @var  CacheUtil */
+    /** @var CacheUtil */
     protected $cacheUtil;
 
     /**
