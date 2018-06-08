@@ -588,6 +588,7 @@ class PluginService
             $em->getConnection()->rollback();
             throw $e;
         }
+        $this->cacheUtil->clearCache();
 
         return true;
     }
