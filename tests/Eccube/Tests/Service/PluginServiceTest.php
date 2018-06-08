@@ -85,9 +85,9 @@ class PluginServiceTest extends AbstractServiceTestCase
             $this->deleteFile($dir);
         }
 
-//        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
-//            unlink($file);
-//        }
+        foreach (glob($this->container->getParameter('kernel.project_dir').'/app/proxy/entity/*.php') as $file) {
+            unlink($file);
+        }
 
         $this->deleteAllRows(['dtb_plugin_event_handler', 'dtb_plugin']);
 
