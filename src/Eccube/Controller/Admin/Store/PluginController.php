@@ -304,6 +304,7 @@ class PluginController extends AbstractController
             $this->addSuccess('admin.plugin.disable.complete', 'admin');
         } else {
             $this->addError('admin.plugin.already.disable', 'admin');
+
             return $this->redirectToRoute('admin_store_plugin');
         }
 
@@ -320,6 +321,7 @@ class PluginController extends AbstractController
      * それを回避するために、このルーティングにリダイレクトして、プラグイン有効状態であらためてキャッシュ再生成する。
      *
      * @Route("/%eccube_admin_route%/store/plugin/clearcache", name="admin_store_clear_cache")
+     *
      * @param Request     $request
      *
      * @return RedirectResponse
